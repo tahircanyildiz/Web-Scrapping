@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makale Arama</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+            text-align: center;
+        }
+
+        input {
+            width: 300px;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .article {
+            background-color: #fff;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 80%;
+        }
+
+        .article h3 {
+            color: #007BFF;
+        }
+
+        .article p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Makale Arama</h1>
+    <form method="post">
+        <label for="keywords">Anahtar Kelimeler:</label>
+        <input type="text" id="keywords" name="keywords">
+        <button type="submit">Ara</button>
+    </form>
+
+    <!-- MongoDB'den çekilen verileri burada listele -->
+    <div id="articles">
+        {% if articles %}
+            {% for article in articles %}
+                <div class="article">
+                    <h3><a href="/article/{{ article['_id'] }}">{{ article['title'] }}</a></h3>
+                    <p>Yazarlar: {{ article['author_names'] }}</p>
+                    <p>Özet: {{ article['abstract'] }}</p>
+                    <p>Makale Anahtar Kelimeler: {{ article['makale_anahtar_kelimeleri']|join(', ') }}</p>
+                    <p>Yayın Tarihi: {{ article['submission_date'] }}</p>
+                    <p>arXiv ID: {{ article['arxiv_id'] }}</p>
+                    <p>DOI: {{ article['doi'] }}</p>
+                    <p>Proje Bağlantısı: {{ article['project_link'] }}</p>
+                    <p>arXiv Bağlantısı: {{ article['arxiv_link'] }}</p>
+                    <p>Referanslar: {{ article['reference'] }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Henüz kaydedilmiş makale bulunmamaktadır.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

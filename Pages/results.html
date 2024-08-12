@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arama Sonuçları</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        #content {
+            max-width: 800px;
+            width: 100%;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        div {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        h2 {
+            color: #007BFF;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="/">
+        <label for="author_names">Yazar İsimleri:</label>
+        <input type="text" id="author_names" name="author_names" placeholder="Yazar isimlerini girin">
+    
+        <label for="submission_date">Gönderim Tarihi:</label>
+        <input type="text" id="submission_date" name="submission_date" placeholder="YYYY-MM-DD">
+    
+        <button type="submit">Ara</button>
+    </form>
+    <h1>Arama Sonuçları</h1>
+    <div id="content">
+        {% for article in articles %}
+            <div>
+                <h3><a href="/article/{{ article['_id'] }}">{{ article['title'] }}</a></h3>
+                <p>Yazarlar: {{ article['author_names'][:101] }}</p>
+                <p>Özet: {{ article['abstract'] }}</p>
+                <p>{{ article['submission_date'] }}</p>
+                
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+    <a href="/">Yeni Arama</a>
+</body>
+</html>

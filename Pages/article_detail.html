@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Makale Detayı - {{ article['title'] }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Nunito', sans-serif;
+    }
+    .article-card {
+      box-shadow: 0 4px 6px rgba(0,0,0,.1);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .article-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 16px rgba(0,0,0,.2);
+    }
+    .download-btn, .btn-download {
+      font-weight: bold;
+    }
+    .meta-info i, .meta-info a {
+      margin-right: 8px;
+      color: #007bff;
+    }
+    .back-link i {
+      margin-right: 5px;
+    }
+    .meta-info a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="article-card p-4 bg-white rounded">
+        <h1 class="mb-3">{{ article['title'] }}</h1>
+        <p class="meta-info"><i class="fas fa-user-edit"></i><strong>Yazarlar:</strong> {{ article['author_names'] }}</p>
+        <p class="meta-info"><i class="fas fa-book-open"></i><strong>Özet:</strong> {{ article['abstract'] }}</p>
+        <p class="meta-info"><i class="fas fa-calendar-alt"></i><strong>Yayın Tarihi:</strong> {{ article['submission_date'] }}</p>
+        <p class="meta-info"><i class="fas fa-hashtag"></i><strong>arXiv ID:</strong> {{ article['arxiv_id'] }}</p>
+        <p class="meta-info"><i class="fas fa-fingerprint"></i><strong>DOI:</strong> {{ article['doi'] }}</p>
+        <p class="meta-info"><i class="fas fa-link"></i><strong>Proje Bağlantısı:</strong> <a href="{{ article['project_link'] }}" target="_blank">{{ article['project_link'] }}</a></p>
+        <p class="meta-info"><i class="fas fa-external-link-alt"></i><strong>arXiv Bağlantısı:</strong> <a href="{{ article['arxiv_link'] }}" target="_blank">{{ article['arxiv_link'] }}</a></p>
+        {% if article['reference'] %}
+        <div class="meta-info">
+          <i class="fas fa-list-ul"></i><strong>Referanslar:</strong>
+          <ul>
+            {% for ref in article['reference'] %}
+              <li><a href="{{ ref['href'] }}" target="_blank">{{ ref['text'] }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <p class="meta-info"><i class="fas fa-key"></i><strong>Makale Anahtar Kelimeleri:</strong> {{ article['makale_anahtar_kelimeleri']|join(', ') }}</p>
+        <a href="{{ article['pdf_link'] }}" class="btn btn-primary btn-download" download="{{ article['title']|replace(' ', '_') }}.pdf">PDF İndir</a>
+      </div>
+      <a href="{{ url_for('index') }}" class="d-block mt-4 back-link text-decoration-none"><i class="fas fa-arrow-left"></i>Başlık Listesine Dön</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
